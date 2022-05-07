@@ -1,10 +1,7 @@
 import React, { Component, cloneElement, Children } from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
 class ChartistGraph extends Component {
-
-  displayName: 'ChartistGraph'
-
   componentWillUnmount() {
     if (this.chartist) {
       try {
@@ -34,7 +31,12 @@ class ChartistGraph extends Component {
     if (this.chartist) {
       this.chartist.update(data, options, responsiveOptions);
     } else {
-      this.chartist = new Chartist[type](this.chart, data, options, responsiveOptions);
+      this.chartist = new Chartist[type](
+        this.chart,
+        data,
+        options,
+        responsiveOptions
+      );
 
       if (config.listener) {
         for (event in config.listener) {
@@ -50,17 +52,23 @@ class ChartistGraph extends Component {
 
   render() {
     const { className, style, children, data, type } = this.props;
-    const childrenWithProps = children && Children.map(children, (child) => (
-      cloneElement(child, {
-        type,
-        data
-      })
-    ));
+    const childrenWithProps =
+      children &&
+      Children.map(children, (child) =>
+        cloneElement(child, {
+          type,
+          data,
+        })
+      );
     return (
-      <div className={`ct-chart ${className || ''}`} ref={(ref) => this.chart = ref} style={style}>
+      <div
+        className={`ct-chart ${className || ''}`}
+        ref={(ref) => (this.chart = ref)}
+        style={style}
+      >
         {childrenWithProps}
       </div>
-    )
+    );
   }
 }
 
@@ -70,7 +78,7 @@ ChartistGraph.propTypes = {
   className: PropTypes.string,
   options: PropTypes.object,
   responsiveOptions: PropTypes.array,
-  style: PropTypes.object
-}
+  style: PropTypes.object,
+};
 
 export default ChartistGraph;
